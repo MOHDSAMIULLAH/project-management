@@ -186,7 +186,7 @@ export default function ProjectDetailClient({ user, project, initialTasks }: Pro
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
-              <h1 className="text-2xl font-bold text-gray-800">Project Hub</h1>
+              <h1 className="text-2xl font-bold text-gray-800">Project Management</h1>
             </div>
 
             <div className="flex items-center space-x-4">

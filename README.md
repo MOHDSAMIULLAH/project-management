@@ -1,4 +1,4 @@
-# Project Hub - AI-Powered Project Management Platform
+# Project Management - AI-Powered Project Management Platform
 
 A full-stack Next.js 16 application with PostgreSQL, Gemini AI, and TypeScript.
 

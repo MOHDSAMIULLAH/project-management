@@ -138,7 +138,9 @@ Feature Branch → PR → develop (CI runs) → Merge → Staging Deployment
 npm run dev          # Start development server
 npm run build        # Build for production
 npm run start        # Start production server
-npm run lint         # Run ESLint
+npm run lint         # Run ESLint (shows warnings)
+npm run lint:strict  # Run ESLint (fails on warnings)
+npm run lint:fix     # Auto-fix ESLint issues
 npm run type-check   # Run TypeScript type checking
 npm run db:push      # Push database schema changes
 npm run db:studio    # Open Drizzle Studio

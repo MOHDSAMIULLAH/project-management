@@ -4,11 +4,5 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "outputDirectory": ".next",
-  "regions": ["iad1"],
-  "env": {
-    "DATABASE_URL": "@DATABASE_URL",
-    "JWT_SECRET": "@JWT_SECRET",
-    "GEMINI_API_KEY": "@GEMINI_API_KEY",
-    "NEXT_PUBLIC_APP_URL": "@NEXT_PUBLIC_APP_URL"
-  }
+  "regions": ["iad1"]
 }

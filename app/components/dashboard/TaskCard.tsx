@@ -1,6 +1,6 @@
 'use client';
 
-import { Edit, Trash2, Clock, AlertCircle, CheckCircle } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
 import type { Task } from '@/types';
 
 interface TaskCardProps {
@@ -22,14 +22,6 @@ export default function TaskCard({ task, onEdit, onDelete, onStatusChange }: Tas
     medium: 'bg-yellow-100 text-yellow-800',
     high: 'bg-red-100 text-red-800',
   };
-
-  const statusIcons = {
-    todo: Clock,
-    'in-progress': AlertCircle,
-    completed: CheckCircle,
-  };
-
-  const StatusIcon = statusIcons[task.status];
 
   return (
     <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">

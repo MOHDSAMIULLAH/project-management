@@ -6,7 +6,7 @@ import type { Task } from '@/types';
 interface TaskModalProps {
   task?: Task | null;
   onClose: () => void;
-  onSave: (taskData: any) => void;
+  onSave: (taskData: Partial<Task>) => void;
 }
 
 export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
@@ -15,10 +15,10 @@ export default function TaskModal({ task, onClose, onSave }: TaskModalProps) {
   const [status, setStatus] = useState(task?.status || 'todo');
   const [priority, setPriority] = useState(task?.priority || 'medium');
   const [estimatedHours, setEstimatedHours] = useState(task?.estimated_hours?.toString() || '');
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
-    const newErrors: any = {};
+    const newErrors: Record<string, string> = {};
     if (!title.trim()) newErrors.title = 'Title is required';
     if (estimatedHours && (isNaN(Number(estimatedHours)) || Number(estimatedHours) < 0)) {
       newErrors.estimatedHours = 'Must be a positive number';

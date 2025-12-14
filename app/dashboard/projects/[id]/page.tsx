@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { projects, tasks } from '@/lib/schema';
 import { eq, and, desc } from 'drizzle-orm';
 import ProjectDetailClient from '../../../components/dashboard/ProjectDetailClient';
+import type { Project, Task } from '@/types';
 
 export default async function ProjectDetailPage({
   params,
@@ -36,11 +37,34 @@ export default async function ProjectDetailPage({
     .where(eq(tasks.projectId, id))
     .orderBy(desc(tasks.createdAt));
 
+  // Map database results to match interface types
+  const mappedProject: Project = {
+    id: project.id,
+    title: project.title,
+    description: project.description || '',
+    created_by: project.createdBy || '',
+    created_at: project.createdAt?.toISOString() || '',
+    updated_at: project.updatedAt?.toISOString() || '',
+  };
+
+  const mappedTasks: Task[] = tasksResult.map((task) => ({
+    id: task.id,
+    title: task.title,
+    description: task.description || '',
+    status: (task.status || 'todo') as 'todo' | 'in-progress' | 'completed',
+    priority: (task.priority || 'medium') as 'low' | 'medium' | 'high',
+    estimated_hours: task.estimatedHours ? Number(task.estimatedHours) : null,
+    project_id: task.projectId || '',
+    created_by: task.createdBy || '',
+    created_at: task.createdAt?.toISOString() || '',
+    updated_at: task.updatedAt?.toISOString() || '',
+  }));
+
   return (
     <ProjectDetailClient
       user={user}
-      project={project as any}
-      initialTasks={tasksResult as any}
+      project={mappedProject}
+      initialTasks={mappedTasks}
     />
   );
 }

@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import type { AITaskSuggestion, Task } from '@/types';
 
 if (!process.env.GEMINI_API_KEY) {
   throw new Error('GEMINI_API_KEY is not defined');
@@ -9,7 +10,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 export async function generateTaskSuggestions(
   projectTitle: string,
   projectDescription: string
-): Promise<any[]> {
+): Promise<AITaskSuggestion[]> {
   try {
     console.log('Generating task suggestions...', projectTitle, projectDescription);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
@@ -46,7 +47,7 @@ export async function generateTaskSuggestions(
 
 export async function analyzeProject(
   projectTitle: string,
-  tasks: any[]
+  tasks: Task[]
 ): Promise<{
   progress: number;
   insights: string[];

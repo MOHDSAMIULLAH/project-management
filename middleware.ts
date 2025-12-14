@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       const { payload } = await jwtVerify(token.value, secret);
       console.log('Token verified successfully for user:', payload.userId);
-    } catch (error) {
+    } catch {
       console.log('Invalid token, redirecting to /login');
       const response = NextResponse.redirect(new URL('/login', request.url));
       response.cookies.delete('auth_token');

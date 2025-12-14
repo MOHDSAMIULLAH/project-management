@@ -5,6 +5,7 @@ import { analyzeProject } from '@/lib/gemini';
 import { db } from '@/lib/db';
 import { projects, tasks } from '@/lib/schema';
 import { eq, and, desc } from 'drizzle-orm';
+import type { Task } from '@/types';
 
 const analyzeSchema = z.object({
   project_id: z.string().uuid(),
@@ -42,10 +43,23 @@ export async function POST(request: NextRequest) {
       .orderBy(desc(tasks.createdAt));
 
     const project = projectResult[0];
-    const tasksList = tasksResult;
+    
+    // Map database results to match Task interface
+    const tasksList: Task[] = tasksResult.map((task) => ({
+      id: task.id,
+      title: task.title,
+      description: task.description || '',
+      status: (task.status || 'todo') as 'todo' | 'in-progress' | 'completed',
+      priority: (task.priority || 'medium') as 'low' | 'medium' | 'high',
+      estimated_hours: task.estimatedHours ? Number(task.estimatedHours) : null,
+      project_id: task.projectId || '',
+      created_by: task.createdBy || '',
+      created_at: task.createdAt?.toISOString() || '',
+      updated_at: task.updatedAt?.toISOString() || '',
+    }));
 
     // Analyze with AI
-    const analysis = await analyzeProject(project.title, tasksList as any);
+    const analysis = await analyzeProject(project.title, tasksList);
 
     return NextResponse.json({ analysis });
   } catch (error) {

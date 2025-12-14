@@ -39,7 +39,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const updateData: any = { updatedAt: new Date() };
+    const updateData: Partial<typeof tasks.$inferInsert> = { updatedAt: new Date() };
     if (validatedData.title !== undefined) updateData.title = validatedData.title;
     if (validatedData.description !== undefined) updateData.description = validatedData.description;
     if (validatedData.status !== undefined) updateData.status = validatedData.status;

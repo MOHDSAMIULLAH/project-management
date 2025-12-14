@@ -12,10 +12,10 @@ interface ProjectModalProps {
 export default function ProjectModal({ project, onClose, onSave }: ProjectModalProps) {
   const [title, setTitle] = useState(project?.title || '');
   const [description, setDescription] = useState(project?.description || '');
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
-    const newErrors: any = {};
+    const newErrors: Record<string, string> = {};
     if (!title.trim()) newErrors.title = 'Title is required';
     if (!description.trim()) newErrors.description = 'Description is required';
     if (title.length > 100) newErrors.title = 'Title must be under 100 characters';

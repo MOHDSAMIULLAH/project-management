@@ -10,7 +10,7 @@ const projectSchema = z.object({
   description: z.string().min(1, 'Description is required'),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const user = await getAuthUser();
     

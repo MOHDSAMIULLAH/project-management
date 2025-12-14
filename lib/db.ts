@@ -10,7 +10,7 @@ const sql = neon(process.env.DATABASE_URL);
 export const db = drizzle(sql, { schema });
 
 // Legacy query function for backward compatibility (if needed)
-export const query = async (text: string, params?: any[]) => {
+export const query = async (text: string, params?: unknown[]) => {
   const result = await sql(text, params);
   return {
     rows: result,

@@ -35,7 +35,7 @@ export default function ProjectDetailClient({ user, project, initialTasks }: Pro
     }
   };
 
-  const handleCreateTask = async (taskData: any) => {
+  const handleCreateTask = async (taskData: Partial<Task>) => {
     try {
       const res = await fetch('/api/tasks', {
         method: 'POST',
@@ -52,7 +52,7 @@ export default function ProjectDetailClient({ user, project, initialTasks }: Pro
     }
   };
 
-  const handleUpdateTask = async (taskData: any) => {
+  const handleUpdateTask = async (taskData: Partial<Task>) => {
     if (!editingTask) return;
 
     try {

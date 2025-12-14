@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Edit, Trash2, ArrowRight, Plus } from 'lucide-react';
+import { Trash2, ArrowRight, Plus } from 'lucide-react';
 import type { Project } from '@/types';
 
 interface ProjectListProps {

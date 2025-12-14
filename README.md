@@ -96,7 +96,7 @@ A full-stack Next.js 16 application with PostgreSQL, Gemini AI, and TypeScript.
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/MOHDSAMIULLAH/project-hub.git
+git clone https://github.com/MOHDSAMIULLAH/project-management.git
 cd project-hub
 ```
 

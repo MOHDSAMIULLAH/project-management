@@ -42,3 +42,6 @@ next-env.d.ts
 
 # CI/CD
 .github/workflows/*.log
+
+.vercel
+.env*.local

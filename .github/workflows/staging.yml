@@ -1,0 +1,51 @@
+name: Staging Deployment
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+jobs:
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: ${{ steps.deploy.outputs.url }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create .env.local file
+        run: |
+          echo "DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}" >> .env.local
+          echo "JWT_SECRET=${{ secrets.STAGING_JWT_SECRET }}" >> .env.local
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env.local
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.STAGING_APP_URL }}" >> .env.local
+
+      - name: Build application
+        run: npm run build
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.STAGING_JWT_SECRET }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Deploy to Vercel (Staging)
+        id: deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--env=preview'
+          working-directory: ./

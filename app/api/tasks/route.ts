@@ -25,7 +25,11 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const projectId = searchParams.get('project_id');
 
-    let query = db
+    const whereConditions = projectId
+      ? and(eq(tasks.createdBy, user.userId), eq(tasks.projectId, projectId))
+      : eq(tasks.createdBy, user.userId);
+
+    const result = await db
       .select({
         id: tasks.id,
         title: tasks.title,
@@ -40,15 +44,9 @@ export async function GET(request: NextRequest) {
         creator_name: users.name,
       })
       .from(tasks)
-      .innerJoin(users, eq(tasks.createdBy, users.id));
-
-    if (projectId) {
-      query = query.where(and(eq(tasks.createdBy, user.userId), eq(tasks.projectId, projectId)));
-    } else {
-      query = query.where(eq(tasks.createdBy, user.userId));
-    }
-
-    const result = await query.orderBy(desc(tasks.createdAt));
+      .innerJoin(users, eq(tasks.createdBy, users.id))
+      .where(whereConditions)
+      .orderBy(desc(tasks.createdAt));
 
     return NextResponse.json({ tasks: result });
   } catch (error) {

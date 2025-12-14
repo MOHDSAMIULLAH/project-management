@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.pnp/
+.yarn/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Scripts
+scripts/
+
+# Config files
+*.config.js
+*.config.mjs
+*.config.ts
+
+# Environment
+.env*
+
+# Testing
+coverage/
+
+# Misc
+.DS_Store
+*.log
